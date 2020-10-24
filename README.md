@@ -56,15 +56,16 @@
 
 ### Networking
 #### List of network requests
-   - Home Feed Screen
-      - (Read/GET) Query all posts where user is author
-      - (Create/POST) Create a new like on a post
+   - Home Screen
+      - (Read/GET) Query all events posted
+      - (Create/EVENT) Create a new like on an event
       - (Delete) Delete existing like
       - (Create/POST) Create a new comment on a post
       - (Delete) Delete existing comment
-   - Create Post Screen
-      - (Create/POST) Create a new post object
+   - My Event List Screen
+      - (Read/Event) View events liked object
    - Profile Screen
       - (Read/GET) Query logged in user object
       - (Update/PUT) Update user profile image
-   - Search Bar  
+   - Search Bar
+      - (Read/GET) Query selected events based on characters entered
