@@ -2,11 +2,12 @@
 
 ## Schema 
 ### Models
-#### Post
+
+#### Events
 
    | Property      | Type     | Description |
    | ------------- | -------- | ------------|
-   | objectId      | String   | unique id for the user post |
+   | objectId      | String   | unique id for the user event |
    | author        | Pointer to User| image author |
    | image         | File     | image that user posts |
    | caption       | String   | image caption by author |
@@ -14,6 +15,45 @@
    | likesCount    | Number   | number of likes for the post |
    | createdAt     | DateTime | date when post is created |
    | updatedAt     | DateTime | date when post is last updated |
+   
+#### User
+
+   | Property      | Type     | Description |
+   | ------------- | -------- | ------------|
+   | objectId      | String   | unique id for the user event |
+   | author        | Pointer to User| image author |
+   | image         | File     | image that user posts |
+   | caption       | String   | image caption by author |
+   | commentsCount | Number   | number of comments that has been posted to an image |
+   | likesCount    | Number   | number of likes for the post |
+   | createdAt     | DateTime | date when post is created |
+   | updatedAt     | DateTime | date when post is last updated | 
+   
+### Comments
+
+   | Property      | Type     | Description |
+   | ------------- | -------- | ------------|
+   | objectId      | String   | unique id for the user event |
+   | author        | Pointer to User| image author |
+   | image         | File     | image that user posts |
+   | caption       | String   | image caption by author |
+   | commentsCount | Number   | number of comments that has been posted to an image |
+   | likesCount    | Number   | number of likes for the post |
+   | createdAt     | DateTime | date when post is created |
+   | updatedAt     | DateTime | date when post is last updated | 
+
+### Likes
+   | Property      | Type     | Description |
+   | ------------- | -------- | ------------|
+   | objectId      | String   | unique id for the user event |
+   | author        | Pointer to User| image author |
+   | image         | File     | image that user posts |
+   | caption       | String   | image caption by author |
+   | commentsCount | Number   | number of comments that has been posted to an image |
+   | likesCount    | Number   | number of likes for the post |
+   | createdAt     | DateTime | date when post is created |
+   | updatedAt     | DateTime | date when post is last updated | 
+
 ### Networking
 #### List of network requests
    - Home Feed Screen
