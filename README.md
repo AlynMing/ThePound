@@ -113,9 +113,72 @@ A new addition to the AAMU SSO banner. The Pound allows students and faculty to 
 #### List of network requests
    - Home Screen
       - (Read/GET) Query all events posted
-      - (Create/EVENT) Create a new like on an event
+      ```swift
+        ParseQuery<Event> query = ParseQuery.getQuery(Event.class);
+        query.include(Event.KEY_USER);
+        query.setLimit(20);
+        query.addDescendingOrder(Event.KEY_CREATED_AT);
+        query.findInBackground(new FindCallback<Event>() {
+            @Override
+            public void done(List<Event> events, ParseException e) {
+                if (e != null){
+                    Log.e(TAG, "Issue with getting events", e);
+                    return;
+                }
+                for (Post post: posts){
+                    Log.i(TAG, "Event: " + event.getDescription() + " username: " + event.getUser().getUsername());
+                }
+                allEvents.addAll(events);
+                adapter.notifyDataSetChanged();
+            }
+         }
+        
+        ```
+      - (Create/POST) Create a new like on an event
+      ```swift        
+        Like like = new Like();
+        like.setEvent(event);
+        like.setUser(currentUser);
+        like.saveInBackground(new SaveCallback() {
+            @Override
+            public void done(ParseException e) {
+                if (e != null){
+                    Log.e(TAG, "Issue with liking event", e);
+                    Toast.makeText(getContext(), "Issue with liking event", Toast.LENGTH_SHORT).show();
+                }
+                Log.i(TAG, "Liked!!");
+            }
+        });
+        ```
       - (Delete) Delete existing like
+      ```swift        
+        like.deleteLike(where user = current user && event = event);
+        event.saveInBackground(new SaveCallback() {
+            @Override
+            public void done(ParseException e) {
+                if (e != null){
+                    Log.e(TAG, "Issue with removing like", e);
+                    Toast.makeText(getContext(), "Issue with saving like", Toast.LENGTH_SHORT).show();
+                }
+                Log.i(TAG, "Unliked!!");
+        ```
       - (Create/POST) Create a new comment on a post
+       ```swift        
+        Comment comment = new Comment();
+        comment.setDescription(description);
+        comment.setUser(currentUser);
+        comment.setEvent(event);
+        comment.saveInBackground(new SaveCallback() {
+            @Override
+            public void done(ParseException e) {
+                if (e != null){
+                    Log.e(TAG, "Issue with liking event", e);
+                    Toast.makeText(getContext(), "Issue with liking event", Toast.LENGTH_SHORT).show();
+                }
+                Log.i(TAG, "Liked!!");
+            }
+        });
+        ```
       - (Delete) Delete existing comment
    - My Event List Screen
       - (Read/Event) View events liked object
