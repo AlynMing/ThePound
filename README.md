@@ -55,6 +55,8 @@ A new addition to the AAMU SSO banner. The Pound allows students and faculty to 
 * Profile
 * Settings
 
+## Wireframes
+
 ## Schema 
 ### Models
 
