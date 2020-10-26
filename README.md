@@ -207,5 +207,20 @@ A new addition to the AAMU SSO banner. The Pound allows students and faculty to 
    - Profile Screen
       - (Read/GET) Query logged in user object
       - (Update/PUT) Update user profile image
+      ```swift
+        currentUser.put("profilePic", new ParseFile(photoFile));
+        currentUser.saveInBackground(new SaveCallback() {
+            @Override
+            public void done(ParseException e) {
+                if (e != null){
+                    Log.e(TAG, "Issue with saving posts", e);
+                    Toast.makeText(getContext(), "Issue with saving picture",                         Toast.LENGTH_SHORT).show();
+                }
+                Log.i(TAG, "Profile picture save was successful!!");
+                ivPostImage.setImageResource(0);
+            }
+        });
+        ```
    - Search Bar
       - (Read/GET) Query selected events based on characters entered
+      
