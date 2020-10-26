@@ -165,23 +165,45 @@ A new addition to the AAMU SSO banner. The Pound allows students and faculty to 
       - (Create/POST) Create a new comment on a post
        ```swift        
         Comment comment = new Comment();
-        comment.setDescription(description);
+        comment.setText(text);
         comment.setUser(currentUser);
         comment.setEvent(event);
         comment.saveInBackground(new SaveCallback() {
             @Override
             public void done(ParseException e) {
                 if (e != null){
-                    Log.e(TAG, "Issue with liking event", e);
-                    Toast.makeText(getContext(), "Issue with liking event", Toast.LENGTH_SHORT).show();
+                    Log.e(TAG, "Issue with commenting", e);
+                    Toast.makeText(getContext(), "Issue with commenting", Toast.LENGTH_SHORT).show();
                 }
-                Log.i(TAG, "Liked!!");
             }
         });
         ```
       - (Delete) Delete existing comment
-   - My Event List Screen
-      - (Read/Event) View events liked object
+   - My Event Liked List Screen
+      - (Read/Event) View events liked by user
+       ```swift
+        ParseQuery<Like> query = ParseQuery.getQuery(Like.class);
+        query.include(Like.KEY_USER);
+        query.include(Like.KEY_EVENT);
+        query.whereEqualTo(Event.KEY_USER, ParseUser.getCurrentUser());
+        query.setLimit(20);
+        query.addDescendingOrder(Post.KEY_CREATED_AT);
+        query.findInBackground(new FindCallback<Like>() {
+            @Override
+            public void done(List<Like> likes, ParseException e) {
+                if (e != null){
+                    Log.e(TAG, "Issue with getting likes", e);
+                    return;
+                }
+                for (Like like: likes){
+                    Log.i(TAG, "Liked: " + like.getEvent().getEventName();         
+                }
+                //turn likes into events
+                allEvents.addEvents(events);
+                adapter.notifyDataSetChanged();
+            }
+          });     
+      ```
    - Profile Screen
       - (Read/GET) Query logged in user object
       - (Update/PUT) Update user profile image
