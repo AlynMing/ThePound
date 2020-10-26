@@ -76,11 +76,8 @@ A new addition to the AAMU SSO banner. The Pound allows students and faculty to 
    | Property      | Type     | Description |
    | ------------- | -------- | ------------|
    | objectId      | String   | unique id for the user event |
-   | author        | Pointer to User| image author |
-   | image         | File     | image that user posts |
-   | caption       | String   | image caption by author |
-   | commentsCount | Number   | number of comments that has been posted to an image |
-   | likesCount    | Number   | number of likes for the post |
+   | username       | String| user's diplayed name |
+   | image         | File     | user's profile image |
    | createdAt     | DateTime | date when post is created |
    | updatedAt     | DateTime | date when post is last updated | 
    
@@ -89,11 +86,8 @@ A new addition to the AAMU SSO banner. The Pound allows students and faculty to 
    | Property      | Type     | Description |
    | ------------- | -------- | ------------|
    | objectId      | String   | unique id for the user event |
-   | author        | Pointer to User| image author |
-   | image         | File     | image that user posts |
-   | caption       | String   | image caption by author |
-   | commentsCount | Number   | number of comments that has been posted to an image |
-   | likesCount    | Number   | number of likes for the post |
+   | author        | Pointer to User| comment author |
+   | event         | Pointer to Event     | event comment was posted on |
    | createdAt     | DateTime | date when post is created |
    | updatedAt     | DateTime | date when post is last updated | 
 
@@ -101,11 +95,9 @@ A new addition to the AAMU SSO banner. The Pound allows students and faculty to 
    | Property      | Type     | Description |
    | ------------- | -------- | ------------|
    | objectId      | String   | unique id for the user event |
-   | author        | Pointer to User| image author |
-   | image         | File     | image that user posts |
+   | author        | Pointer to User| comment author |
+   | event         | Pointer to Event     | event that was liked |
    | caption       | String   | image caption by author |
-   | commentsCount | Number   | number of comments that has been posted to an image |
-   | likesCount    | Number   | number of likes for the post |
    | createdAt     | DateTime | date when post is created |
    | updatedAt     | DateTime | date when post is last updated | 
 
