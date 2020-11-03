@@ -23,6 +23,7 @@ A new addition to the AAMU SSO banner. The Pound allows students and faculty to 
 **Required Must-have Stories**
 
 - [x] User logs in to access the AAMU Event Board.
+- [ ] User can scroll through the listed events.
 - [ ] User has a liked events page.
 - [ ] Profile pages for each user
 - [ ] Settings (Accesibility, Notification, General, etc.)
