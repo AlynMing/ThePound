@@ -221,3 +221,10 @@ A new addition to the AAMU SSO banner. The Pound allows students and faculty to 
    - Search Bar
       - (Read/GET) Query selected events based on characters entered
       
+## Video Walkthrough
+
+Here's a walkthrough of implemented user stories:
+
+<img src='https://github.com/NylanDW/InstagramCopy/blob/master/walkthrough2.gif' title='Video Walkthrough' width='' alt='Video Walkthrough' />
+
+GIF created with [LiceCap](http://www.cockos.com/licecap/).  
