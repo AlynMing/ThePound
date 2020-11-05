@@ -24,10 +24,10 @@ A new addition to the AAMU SSO banner. The Pound allows students and faculty to 
 
 - [x] Create an API database to store user info and posts.
 - [x] User logs in to access the AAMU Event Board.
-- [ ] User can scroll through the listed events.
+- [x] User can scroll through the listed events.
 - [ ] User has a liked events page.
-- [ ] Profile pages for each user
-- [ ] Settings (Accesibility, Notification, General, etc.)
+- [x] Profile pages for each user
+- [x] Settings (Accesibility, Notification, General, etc.)
 
 **Optional Nice-to-have Stories**
 
