@@ -8,9 +8,9 @@
         android:title="Home"
         app:showAsAction="always" />
     <item
-        android:id="@+id/action_compose"
-        android:icon="@android:drawable/ic_menu_edit"
-        android:title="Compose"
+        android:id="@+id/action_likedevents"
+        android:icon="@android:drawable/btn_star_big_off"
+        android:title="Liked Events"
         app:showAsAction="always" />
     <item
         android:id="@+id/action_profile"

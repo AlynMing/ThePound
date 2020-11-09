@@ -36,7 +36,7 @@ public class MainActivity extends AppCompatActivity {
                     case R.id.action_home:
                         fragment = new PostFragment();
                         break;
-                    case R.id.action_compose:
+                    case R.id.action_likedevents:
                         fragment = new ComposeFragment();
                         break;
                     case R.id.action_profile:
