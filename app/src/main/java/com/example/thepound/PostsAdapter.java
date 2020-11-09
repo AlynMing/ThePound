@@ -4,9 +4,11 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -52,6 +54,9 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
         private TextView tvDescription;
         private ImageView ivProfile;
         private TextView tvCreatedAt;
+        private TextView tvTile;
+        private ImageView ivLike;
+        private EditText etComment;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -62,16 +67,26 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
             tvDescription = itemView.findViewById(R.id.tvDescription);
             ivProfile = itemView.findViewById(R.id.ivProfile);
             tvCreatedAt = itemView.findViewById(R.id.tvCreatedAt);
+            tvTile = itemView.findViewById(R.id.tvTitle);
+            ivLike = itemView.findViewById(R.id.ivLike);
+            etComment = itemView.findViewById(R.id.etComment);
             container = itemView.findViewById(R.id.container);
         }
 
         public void bind(Post post) {
             tvDescription.setText(post.getDescription());
+            tvTile.setText(post.getTitle());
             tvUsername.setText(post.getUser().getUsername());
             tvCreatedAt.setText(post.getCreatedAt().toString());
             ParseFile image = post.getImage();
             if(image != null){
                 Glide.with(context).load(post.getImage().getUrl()).into(ivImage);
+                tvTile.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        Toast.makeText(context, tvTile.getText(), Toast.LENGTH_SHORT).show();
+                    }
+                });
             }
             ParseFile profileImage = post.getUser().getParseFile("profilePic");
             if(profileImage != null){

@@ -158,10 +158,10 @@ public class ComposeFragment extends Fragment {
             @Override
             public void done(ParseException e) {
                 if (e != null){
-                    Log.e(TAG, "Issue with saving posts", e);
+                    Log.e(TAG, "Issue with saving events", e);
                     Toast.makeText(getContext(), "Issue with saving post", Toast.LENGTH_SHORT).show();
                 }
-                Log.i(TAG, "Post save was successful!!");
+                Log.i(TAG, "Event save was successful!!");
                 etDescription.setText("");
                 ivPostImage.setImageResource(0);
             }
