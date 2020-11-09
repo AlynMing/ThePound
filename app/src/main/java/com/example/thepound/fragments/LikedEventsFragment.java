@@ -23,6 +23,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.example.thepound.Like;
 import com.example.thepound.LoginActivity;
 import com.example.thepound.Post;
 import com.example.thepound.PostsAdapter;
@@ -46,9 +47,28 @@ public class LikedEventsFragment extends Fragment {
     private RecyclerView rvLikedPosts;
     protected PostsAdapter adapter;
     protected List<Post> allPosts;
+    private List<Like> allLikes;
 
     public LikedEventsFragment() {
         // Required empty public constructor
+    }
+
+    public void queryLikes(){
+        ParseQuery<Like> query = ParseQuery.getQuery(Like.class);
+        query.include(Like.KEY_USER_ID);
+        query.include(Like.KEY_EVENT_ID);
+        query.whereEqualTo(Like.KEY_USER_ID, ParseUser.getCurrentUser());
+        query.findInBackground(new FindCallback<Like>() {
+            @Override
+            public void done(List<Like> likes, ParseException e) {
+                if (e != null){
+                    Log.e(TAG, "Issue with getting posts", e);
+                    return;
+                }
+                allLikes.addAll(likes);
+                queryPosts();
+            }
+        });
     }
 
 
@@ -64,18 +84,21 @@ public class LikedEventsFragment extends Fragment {
         rvLikedPosts = view.findViewById(R.id.rvPosts);
 
         allPosts = new ArrayList<>();
+        allLikes = new ArrayList<>();
         adapter = new PostsAdapter(getContext(), allPosts );
 
         rvLikedPosts.setAdapter(adapter);
         rvLikedPosts.setLayoutManager(new LinearLayoutManager(getContext()));
-        queryPosts();
+        queryLikes();
+       // queryPosts();
     }
 
     protected void queryPosts() {
+        for(Like like: allLikes){
         ParseQuery<Post> query = ParseQuery.getQuery(Post.class);
         query.include(Post.KEY_USER);
-        query.setLimit(20);
-        query.addDescendingOrder(Post.KEY_CREATED_AT);
+            String postevent = like.getEvent().getObjectId();
+        query.whereEqualTo("objectId", like.getEvent().getObjectId());
         query.findInBackground(new FindCallback<Post>() {
             @Override
             public void done(List<Post> posts, ParseException e) {
@@ -90,5 +113,6 @@ public class LikedEventsFragment extends Fragment {
                 adapter.notifyDataSetChanged();
             }
         });
+        }
     }
 }

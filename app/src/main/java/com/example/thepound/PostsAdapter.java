@@ -107,27 +107,6 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
             });
         }
 
-        private int queryLikes(Post post){
-            final int[] likeCount = {0};
-            ParseQuery<Like> query = ParseQuery.getQuery(Like.class);
-            query.include(Like.KEY_EVENT_ID);
-            query.whereEqualTo(Like.KEY_EVENT_ID, post);
-            query.findInBackground(new FindCallback<Like>() {
-                @Override
-                public void done(List<Like> likes, ParseException e) {
-                    if (e != null){
-                        Log.e(TAG, "Issue with liking event", e);
-                        return;
-                    }
-
-                    likeCount[0] = likes.size();
-
-                    return;
-                }
-            });
-            return likeCount[0];
-        }
-
         private void saveLike(ParseUser currentUser, final Post post){
             final boolean[] liked = {false};
             ParseQuery<Like> query = ParseQuery.getQuery(Like.class);

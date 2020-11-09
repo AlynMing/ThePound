@@ -8,7 +8,7 @@ import androidx.fragment.app.FragmentManager;
 import android.os.Bundle;
 import android.view.MenuItem;
 
-import com.example.thepound.fragments.ComposeFragment;
+import com.example.thepound.fragments.LikedEventsFragment;
 import com.example.thepound.fragments.PostFragment;
 import com.example.thepound.fragments.ProfileFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -37,7 +37,7 @@ public class MainActivity extends AppCompatActivity {
                         fragment = new PostFragment();
                         break;
                     case R.id.action_likedevents:
-                        fragment = new ComposeFragment();
+                        fragment = new LikedEventsFragment();
                         break;
                     case R.id.action_profile:
                     default:
