@@ -149,6 +149,15 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
                                                        liked[0] = true;
                                                        like.delete();
                                                        post.subtractLike();
+                                                       post.saveInBackground(new SaveCallback() {
+                                                           @Override
+                                                           public void done(ParseException e) {
+                                                               if (e != null) {
+                                                                   Log.e(TAG, "Issue liking events", e);
+                                                                   Toast.makeText(context, "Issue liking event", Toast.LENGTH_SHORT).show();
+                                                               }
+                                                           }
+                                                       });
                                                        notifyDataSetChanged();
                                                    } catch (ParseException ex) {
                                                        ex.printStackTrace();
@@ -176,8 +185,8 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
                                                    @Override
                                                    public void done(ParseException e) {
                                                        if (e != null) {
-                                                           Log.e(TAG, "Issue unliking events", e);
-                                                           Toast.makeText(context, "Issue unliking event", Toast.LENGTH_SHORT).show();
+                                                           Log.e(TAG, "Issue liking events", e);
+                                                           Toast.makeText(context, "Issue liking event", Toast.LENGTH_SHORT).show();
                                                        }
                                                    }
                                                });
