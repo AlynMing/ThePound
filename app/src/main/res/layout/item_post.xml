@@ -108,4 +108,10 @@
             android:text="Post" />
     </LinearLayout>
 
+    <TextView
+        android:id="@+id/tvViewComment"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="View Comments" />
+
 </LinearLayout>
