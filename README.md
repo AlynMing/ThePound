@@ -23,7 +23,7 @@ A new addition to the AAMU SSO banner. The Pound allows students and faculty to 
 **Required Must-have Stories**
 
 - [x] Create an API database to store user info and posts.
-- [x] User logs in to access the AAMU Event Board.
+- [x] User can login to access the AAMU Event Board.
 - [x] User can scroll through the listed events.
 - [ ] User has a liked events page.
 - [x] Profile pages for each user
@@ -33,7 +33,8 @@ A new addition to the AAMU SSO banner. The Pound allows students and faculty to 
 
 - [ ] Theme editor for the look of the individuals app
 - [ ] User can follow pages of organizations' events they like.
-- [ ] User can search specific events based on event name or tags if applicable.
+- [x] User can post comments on events
+- [x] User can favorite events they like
 
 ### 2. Screen Archetypes
 
