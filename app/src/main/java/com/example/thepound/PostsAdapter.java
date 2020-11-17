@@ -13,9 +13,13 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.example.thepound.fragments.DetailFragment;
 import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseFile;
@@ -73,7 +77,6 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
 
-
             tvUsername = itemView.findViewById(R.id.tvUsername);
             ivImage = itemView.findViewById(R.id.ivImage);
             tvDescription = itemView.findViewById(R.id.tvDescription);
@@ -85,6 +88,54 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
             btnPost = itemView.findViewById(R.id.btnPost);
             etComment = itemView.findViewById(R.id.etComment);
             container = itemView.findViewById(R.id.container);
+        }
+
+        public void bind(final Post post) {
+            tvDescription.setText(post.getDescription());
+            tvTile.setText(post.getTitle());
+            tvUsername.setText(post.getUser().getUsername());
+            tvCreatedAt.setText(post.getCreatedAt().toString());
+            tvLikes.setText(post.getLikes().toString() + " Likes");
+            ParseFile image = post.getImage();
+            if (image != null) {
+                Glide.with(context).load(post.getImage().getUrl()).into(ivImage);
+                tvTile.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        DetailFragment detailFragment = DetailFragment.newInstance(post.getObjectId());
+                        FragmentManager fragmentManager = ((AppCompatActivity)context).getSupportFragmentManager();
+                        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                        fragmentTransaction.replace(R.id.flContainer, detailFragment);
+                        fragmentTransaction.commit();;
+                    }
+                });
+                btnPost.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        String comment = etComment.getText().toString();
+                        if (comment.isEmpty()){
+                            Toast.makeText(context, "Text Box Empty", Toast.LENGTH_SHORT).show();
+                        }
+                        else {
+                            ParseUser currentUser = ParseUser.getCurrentUser();
+                            saveComment(comment, currentUser, post);
+                        }
+                    }
+                });
+
+                ivLike.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        ParseUser currentUser = ParseUser.getCurrentUser();
+                        saveLike(currentUser, post);
+                    }
+                });
+                ParseFile profileImage = post.getUser().getParseFile("profilePic");
+                if (profileImage != null) {
+                    Glide.with(context).load(post.getUser().getParseFile("profilePic").getUrl()).into(ivProfile);
+                }
+
+            }
         }
 
         private void saveComment(String description, ParseUser currentUser, Post post){
@@ -175,50 +226,6 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
                                        }
                                    }
             );
-        }
-
-        public void bind(final Post post) {
-            tvDescription.setText(post.getDescription());
-            tvTile.setText(post.getTitle());
-            tvUsername.setText(post.getUser().getUsername());
-            tvCreatedAt.setText(post.getCreatedAt().toString());
-            tvLikes.setText(post.getLikes().toString() + " Likes");
-            ParseFile image = post.getImage();
-            if (image != null) {
-                Glide.with(context).load(post.getImage().getUrl()).into(ivImage);
-                tvTile.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        Toast.makeText(context, tvTile.getText(), Toast.LENGTH_SHORT).show();
-                    }
-                });
-                btnPost.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        String comment = etComment.getText().toString();
-                        if (comment.isEmpty()){
-                            Toast.makeText(context, "Text Box Empty", Toast.LENGTH_SHORT).show();
-                        }
-                        else {
-                            ParseUser currentUser = ParseUser.getCurrentUser();
-                            saveComment(comment, currentUser, post);
-                        }
-                    }
-                });
-
-                ivLike.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        ParseUser currentUser = ParseUser.getCurrentUser();
-                        saveLike(currentUser, post);
-                    }
-                });
-                ParseFile profileImage = post.getUser().getParseFile("profilePic");
-                if (profileImage != null) {
-                    Glide.with(context).load(post.getUser().getParseFile("profilePic").getUrl()).into(ivProfile);
-                }
-
-            }
         }
     }
 }

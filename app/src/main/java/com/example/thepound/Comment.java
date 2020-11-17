@@ -9,6 +9,7 @@ public class Comment extends ParseObject {
     public static final String KEY_USER_ID = "user";
     public static final String KEY_EVENT_ID = "event";
     public static final String KEY_DESCRIPTION = "description";
+    public static final String KEY_CREATED_AT = "createdAt";
 
     public String getDescription() {
         return getString(KEY_DESCRIPTION);
