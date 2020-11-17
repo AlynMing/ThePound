@@ -53,23 +53,7 @@ public class LikedEventsFragment extends Fragment {
         // Required empty public constructor
     }
 
-    public void queryLikes(){
-        ParseQuery<Like> query = ParseQuery.getQuery(Like.class);
-        query.include(Like.KEY_USER_ID);
-        query.include(Like.KEY_EVENT_ID);
-        query.whereEqualTo(Like.KEY_USER_ID, ParseUser.getCurrentUser());
-        query.findInBackground(new FindCallback<Like>() {
-            @Override
-            public void done(List<Like> likes, ParseException e) {
-                if (e != null){
-                    Log.e(TAG, "Issue with getting posts", e);
-                    return;
-                }
-                allLikes.addAll(likes);
-                queryPosts();
-            }
-        });
-    }
+
 
 
     @Override
@@ -95,24 +79,42 @@ public class LikedEventsFragment extends Fragment {
 
     protected void queryPosts() {
         for(Like like: allLikes){
-        ParseQuery<Post> query = ParseQuery.getQuery(Post.class);
-        query.include(Post.KEY_USER);
+            ParseQuery<Post> query = ParseQuery.getQuery(Post.class);
+            query.include(Post.KEY_USER);
             String postevent = like.getEvent().getObjectId();
-        query.whereEqualTo("objectId", like.getEvent().getObjectId());
-        query.findInBackground(new FindCallback<Post>() {
+            query.whereEqualTo("objectId", like.getEvent().getObjectId());
+            query.findInBackground(new FindCallback<Post>() {
+                @Override
+                public void done(List<Post> posts, ParseException e) {
+                    if (e != null){
+                        Log.e(TAG, "Issue with getting posts", e);
+                        return;
+                    }
+                    for (Post post: posts){
+                        Log.i(TAG, "Post: " + post.getDescription() + " username: " + post.getUser().getUsername());
+                    }
+                    allPosts.addAll(posts);
+                    adapter.notifyDataSetChanged();
+                }
+            });
+        }
+    }
+    public void queryLikes(){
+        ParseQuery<Like> query = ParseQuery.getQuery(Like.class);
+        query.include(Like.KEY_USER_ID);
+        query.include(Like.KEY_EVENT_ID);
+        query.whereEqualTo(Like.KEY_USER_ID, ParseUser.getCurrentUser());
+        query.findInBackground(new FindCallback<Like>() {
             @Override
-            public void done(List<Post> posts, ParseException e) {
+            public void done(List<Like> likes, ParseException e) {
                 if (e != null){
                     Log.e(TAG, "Issue with getting posts", e);
                     return;
                 }
-                for (Post post: posts){
-                    Log.i(TAG, "Post: " + post.getDescription() + " username: " + post.getUser().getUsername());
-                }
-                allPosts.addAll(posts);
-                adapter.notifyDataSetChanged();
+                allLikes.addAll(likes);
+                queryPosts();
             }
         });
-        }
     }
+
 }
