@@ -230,6 +230,6 @@ Here are walkthroughs of implemented user stories:
 
 <img src='https://github.com/NylanW1/ThePound/blob/main/milestone2.gif' title='Video Walkthrough2' width='' alt='Video Walkthrough2' />
 
-<img src='file:///Users/nylanwashington/Downloads/Themeaddon%20(1).webm' title='Video Walkthroughbonus' width='' alt='Video Walkthroughbonus' />
+<img src='https://github.com/NylanW1/ThePound/blob/main/2020-11-16%2019.49.40.gif' title='Video Walkthroughbonus' width='' alt='Video Walkthroughbonus' />
 
 GIF created with [LiceCap](http://www.cockos.com/licecap/).  
