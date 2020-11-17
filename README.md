@@ -228,6 +228,7 @@ Here are walkthroughs of implemented user stories:
 <img src='https://github.com/NylanW1/ThePound/blob/main/milestone1.gif' title='Video Walkthrough1' width='' alt='Video Walkthrough1' />
 
 <img src='https://github.com/NylanW1/ThePound/blob/main/milestone2.gif' title='Video Walkthrough2' width='' alt='Video Walkthrough2' />
+<img src='https://github.com/NylanW1/ThePound/blob/main/Walkthough10.gif' width='' alt='Video Walkthrough10' />
 
 GIF created with [LiceCap](http://www.cockos.com/licecap/).
 
