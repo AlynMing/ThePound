@@ -25,7 +25,11 @@ import com.parse.ParseUser;
 
 import java.util.List;
 
-public class SettingsFragment extends PostFragment {
+public class SettingsFragment extends Fragment {
+
+    public SettingsFragment() {
+        // Required empty public constructor
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -33,28 +37,7 @@ public class SettingsFragment extends PostFragment {
         return inflater.inflate(R.layout.fragment_settings, container, false);
     }
 
-    @Override
-    protected void queryPosts() {
-        ParseQuery<Post> query = ParseQuery.getQuery(Post.class);
-        query.include(Post.KEY_USER);
-        query.whereEqualTo(Post.KEY_USER, ParseUser.getCurrentUser());
-        query.setLimit(20);
-        query.addDescendingOrder(Post.KEY_CREATED_AT);
-        query.findInBackground(new FindCallback<Post>() {
-            @Override
-            public void done(List<Post> posts, ParseException e) {
-                if (e != null){
-                    Log.e(TAG, "Issue with getting posts", e);
-                    return;
-                }
-                for (Post post: posts){
-                    Log.i(TAG, "Post: " + post.getDescription() + " username: " + post.getUser().getUsername());
-                }
-                allPosts.addAll(posts);
-                adapter.notifyDataSetChanged();
-            }
-        });
-    }
+
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {

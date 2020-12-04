@@ -13,7 +13,7 @@
         android:title="Liked Events"
         app:showAsAction="always" />
     <item
-        android:id="@+id/action_profile"
+        android:id="@+id/action_settings"
         android:icon="@android:drawable/ic_menu_manage"
         android:title="Settings"
         app:showAsAction="always" />
