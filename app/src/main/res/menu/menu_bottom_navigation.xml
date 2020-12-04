@@ -14,7 +14,7 @@
         app:showAsAction="always" />
     <item
         android:id="@+id/action_profile"
-        android:icon="@drawable/ic_launcher_foreground"
-        android:title="Profile"
+        android:icon="@android:drawable/ic_menu_manage"
+        android:title="Settings"
         app:showAsAction="always" />
 </menu>

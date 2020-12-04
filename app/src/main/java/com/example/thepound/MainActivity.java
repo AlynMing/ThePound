@@ -10,7 +10,7 @@ import android.view.MenuItem;
 
 import com.example.thepound.fragments.LikedEventsFragment;
 import com.example.thepound.fragments.PostFragment;
-import com.example.thepound.fragments.ProfileFragment;
+import com.example.thepound.fragments.SettingsFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class MainActivity extends AppCompatActivity {
@@ -39,9 +39,9 @@ public class MainActivity extends AppCompatActivity {
                     case R.id.action_likedevents:
                         fragment = new LikedEventsFragment();
                         break;
-                    case R.id.action_profile:
+                    case R.id.action_settings:
                     default:
-                        fragment = new ProfileFragment();
+                        fragment = new SettingsFragment();
                         break;
                 }
                 fragmentManager.beginTransaction().replace(R.id.flContainer, fragment).commit();
