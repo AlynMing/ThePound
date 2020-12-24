@@ -39,7 +39,7 @@ public class DetailFragment extends Fragment {
 
     public static final String TAG = "DetailFragment";
     private Post currentPost;
-    private String commentPostId;
+    private String postId;
     private RecyclerView rvComments;
     protected CommentAdapter adapter;
     protected List<Comment> allComments;
@@ -62,7 +62,7 @@ public class DetailFragment extends Fragment {
 
     private void readBundle(Bundle bundle) {
         if (bundle != null) {
-            commentPostId = bundle.getString("postId");
+            postId = bundle.getString("postId");
         }
     }
 
@@ -91,7 +91,6 @@ public class DetailFragment extends Fragment {
         rvComments.setLayoutManager(new LinearLayoutManager(getContext()));
         readBundle(getArguments());
         queryPosts();
-
         queryComments();
     }
 
@@ -130,8 +129,12 @@ public class DetailFragment extends Fragment {
     }
 
     protected void queryComments() {
-        final ParseQuery<Comment> query = ParseQuery.getQuery(Comment.class);
+        ParseQuery<Post> postQuery = ParseQuery.getQuery(Post.class);
+        postQuery.whereEqualTo("objectId", postId);
+        ParseQuery<Comment> query = ParseQuery.getQuery(Comment.class);
         query.include(Comment.KEY_USER_ID);
+        query.include(Comment.KEY_EVENT_ID);
+        query.whereMatchesKeyInQuery("event", "objectId", postQuery);
         query.setLimit(20);
         query.addDescendingOrder(Comment.KEY_CREATED_AT);
         query.findInBackground(new FindCallback<Comment>() {
@@ -142,7 +145,9 @@ public class DetailFragment extends Fragment {
                     return;
                 }
                 for (Comment comment: comments){
-                    Log.i(TAG, "Comment: " + comment.getDescription() + " username: " + comment.getUser().getUsername());
+                    Log.i(TAG, "Comment: " + comment.getDescription() + " Username: " + comment.getUser().getUsername() +
+                            " Event: " + comment.getEvent().getObjectId()
+                    );
                 }
                 allComments.addAll(comments);
                 adapter.notifyDataSetChanged();
@@ -153,7 +158,7 @@ public class DetailFragment extends Fragment {
     protected void queryPosts() {
         ParseQuery<Post> query = ParseQuery.getQuery(Post.class);
         query.include(Post.KEY_USER);
-        query.whereEqualTo("objectId", commentPostId);
+        query.whereEqualTo("objectId", postId);
         query.findInBackground(new FindCallback<Post>() {
             @Override
             public void done(List<Post> posts, ParseException e) {
@@ -181,9 +186,6 @@ public class DetailFragment extends Fragment {
                             }
                         }
                     });
-                    queryComments();
-                    adapter.notifyDataSetChanged();
-
                 }
             }
         });
