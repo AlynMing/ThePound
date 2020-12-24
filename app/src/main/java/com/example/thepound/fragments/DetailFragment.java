@@ -38,7 +38,6 @@ import java.util.List;
 public class DetailFragment extends Fragment {
 
     public static final String TAG = "DetailFragment";
-    private Post currentPost;
     private String postId;
     private RecyclerView rvComments;
     protected CommentAdapter adapter;
@@ -168,7 +167,6 @@ public class DetailFragment extends Fragment {
                 }
                 for (Post post: posts){
                     final String postObjectId = post.getObjectId();
-                    currentPost = post;
                     tvDescription.setText(post.getDescription());
                     tvTile.setText(post.getTitle());
                     tvUsername.setText(post.getUser().getUsername());

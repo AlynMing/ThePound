@@ -5,6 +5,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -23,13 +25,29 @@ import java.util.List;
 
 public class ProfileFragment extends Fragment {
 
-    public static final String TAG = "PostFragment";
+    public static final String TAG = "ProfileFragment";
+    private String userId;
     private RecyclerView rvPosts;
     protected PostsAdapter adapter;
     protected List<Post> allPosts;
 
-    public ProfileFragment() {
+    //public ProfileFragment() {
         // Required empty public constructor
+    //}
+
+    public static ProfileFragment newInstance(String userId) {
+        Bundle bundle = new Bundle();
+        bundle.putString("userId", userId);
+        ProfileFragment fragment = new ProfileFragment();
+        fragment.setArguments(bundle);
+
+        return fragment;
+    }
+
+    private void readBundle(Bundle bundle) {
+        if (bundle != null) {
+            userId = bundle.getString("userId");
+        }
     }
 
 
@@ -49,14 +67,16 @@ public class ProfileFragment extends Fragment {
 
         rvPosts.setAdapter(adapter);
         rvPosts.setLayoutManager(new LinearLayoutManager(getContext()));
+        readBundle(getArguments());
         queryPosts();
     }
 
     protected void queryPosts() {
+        ParseQuery<ParseUser> userQuery = ParseQuery.getQuery(ParseUser.class);
+        userQuery.whereEqualTo("objectId", userId);
         ParseQuery<Post> query = ParseQuery.getQuery(Post.class);
         query.include(Post.KEY_USER);
-        query.include(Post.KEY_USER);
-        query.whereEqualTo(Post.KEY_USER, ParseUser.getCurrentUser());
+        query.whereMatchesKeyInQuery("user", "objectId", userQuery);
         query.setLimit(20);
         query.addDescendingOrder(Post.KEY_CREATED_AT);
         query.findInBackground(new FindCallback<Post>() {

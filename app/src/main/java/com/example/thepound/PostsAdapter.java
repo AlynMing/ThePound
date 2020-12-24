@@ -20,6 +20,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.thepound.fragments.DetailFragment;
+import com.example.thepound.fragments.ProfileFragment;
 import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseFile;
@@ -71,6 +72,7 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
         private TextView tvTile;
         private ImageView ivLike;
         private TextView tvLikes;
+        private TextView tvViewComment;
         private EditText etComment;
         private Button btnPost;
 
@@ -83,6 +85,7 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
             ivProfile = itemView.findViewById(R.id.ivProfile);
             tvCreatedAt = itemView.findViewById(R.id.tvCreatedAt);
             tvTile = itemView.findViewById(R.id.tvTitle);
+            tvViewComment = itemView.findViewById(R.id.tvViewComment);
             ivLike = itemView.findViewById(R.id.ivLike);
             tvLikes = itemView.findViewById(R.id.tvLikes);
             btnPost = itemView.findViewById(R.id.btnPost);
@@ -99,14 +102,24 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
             ParseFile image = post.getImage();
             if (image != null) {
                 Glide.with(context).load(post.getImage().getUrl()).into(ivImage);
-                tvTile.setOnClickListener(new View.OnClickListener() {
+                tvViewComment.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
                         DetailFragment detailFragment = DetailFragment.newInstance(post.getObjectId());
                         FragmentManager fragmentManager = ((AppCompatActivity)context).getSupportFragmentManager();
                         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
                         fragmentTransaction.replace(R.id.flContainer, detailFragment);
-                        fragmentTransaction.commit();;
+                        fragmentTransaction.commit();
+                    }
+                });
+                tvUsername.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        ProfileFragment profileFragment = ProfileFragment.newInstance(post.getUser().getObjectId());
+                        FragmentManager fragmentManager = ((AppCompatActivity)context).getSupportFragmentManager();
+                        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                        fragmentTransaction.replace(R.id.flContainer, profileFragment);
+                        fragmentTransaction.commit();
                     }
                 });
                 btnPost.setOnClickListener(new View.OnClickListener() {
