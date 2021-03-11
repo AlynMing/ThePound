@@ -22,17 +22,17 @@ A new addition to the AAMU SSO banner. The Pound allows students and faculty to 
 
 **Required Must-have Stories**
 
-- [x] Create an API database to store user info and posts.
-- [x] User can login to access the AAMU Event Board.
-- [x] User can scroll through the listed events.
-- [x] User has a liked events page.
-- [x] Settings (Accesibility, Notification, General, etc.)
+- [ ] Create an API database to store user info and posts.
+- [ ] User can login to access the AAMU Event Board.
+- [ ] User can scroll through the listed events.
+- [ ] User has a liked events page.
+- [ ] Settings (Accesibility, Notification, General, etc.)
 
 **Optional Nice-to-have Stories**
 
-- [x] Theme editor for the look of the individuals app
-- [x] User can post comments on events
-- [x] User can favorite events they like
+- [ ] Theme editor for the look of the individuals app
+- [ ] User can post comments on events
+- [ ] User can favorite events they like
 
 ### 2. Screen Archetypes
 
@@ -63,176 +63,17 @@ A new addition to the AAMU SSO banner. The Pound allows students and faculty to 
 
 #### Events
 
-   | Property      | Type     | Description |
-   | ------------- | -------- | ------------|
-   | objectId      | String   | unique id for the user event |
-   | author        | Pointer to User| image author |
-   | image         | File     | image that user posts |
-   | caption       | String   | image caption by author |
-   | commentsCount | Number   | number of comments that has been posted to an image |
-   | likesCount    | Number   | number of likes for the post |
-   | createdAt     | DateTime | date when post is created |
-   | updatedAt     | DateTime | date when post is last updated |
    
 #### User
 
-   | Property      | Type     | Description |
-   | ------------- | -------- | ------------|
-   | objectId      | String   | unique id for the user event |
-   | username       | String| user's diplayed name |
-   | image         | File     | user's profile image |
-   | createdAt     | DateTime | date when post is created |
-   | updatedAt     | DateTime | date when post is last updated | 
+  
    
 ### Comments
 
-   | Property      | Type     | Description |
-   | ------------- | -------- | ------------|
-   | objectId      | String   | unique id for the user event |
-   | author        | Pointer to User| comment author |
-   | event         | Pointer to Event     | event comment was posted on |
-   | createdAt     | DateTime | date when post is created |
-   | updatedAt     | DateTime | date when post is last updated | 
-
+ 
 ### Likes
-   | Property      | Type     | Description |
-   | ------------- | -------- | ------------|
-   | objectId      | String   | unique id for the user event |
-   | author        | Pointer to User| comment author |
-   | event         | Pointer to Event     | event that was liked |
-   | caption       | String   | image caption by author |
-   | createdAt     | DateTime | date when post is created |
-   | updatedAt     | DateTime | date when post is last updated | 
+  
 
 ### Networking
 #### List of network requests
-   - Home Screen
-      - (Read/GET) Query all events posted
-      ```swift
-        ParseQuery<Event> query = ParseQuery.getQuery(Event.class);
-        query.include(Event.KEY_USER);
-        query.setLimit(20);
-        query.addDescendingOrder(Event.KEY_CREATED_AT);
-        query.findInBackground(new FindCallback<Event>() {
-            @Override
-            public void done(List<Event> events, ParseException e) {
-                if (e != null){
-                    Log.e(TAG, "Issue with getting events", e);
-                    return;
-                }
-                for (Post post: posts){
-                    Log.i(TAG, "Event: " + event.getDescription() + " username: " + event.getUser().getUsername());
-                }
-                allEvents.addAll(events);
-                adapter.notifyDataSetChanged();
-            }
-         }
-        
-        ```
-      - (Create/POST) Create a new like on an event
-      ```swift        
-        Like like = new Like();
-        like.setEvent(event);
-        like.setUser(currentUser);
-        like.saveInBackground(new SaveCallback() {
-            @Override
-            public void done(ParseException e) {
-                if (e != null){
-                    Log.e(TAG, "Issue with liking event", e);
-                    Toast.makeText(getContext(), "Issue with liking event", Toast.LENGTH_SHORT).show();
-                }
-                Log.i(TAG, "Liked!!");
-            }
-        });
-        ```
-      - (Delete) Delete existing like
-      ```swift        
-        like.deleteLike(where user = current user && event = event);
-        event.saveInBackground(new SaveCallback() {
-            @Override
-            public void done(ParseException e) {
-                if (e != null){
-                    Log.e(TAG, "Issue with removing like", e);
-                    Toast.makeText(getContext(), "Issue with saving like", Toast.LENGTH_SHORT).show();
-                }
-                Log.i(TAG, "Unliked!!");
-        ```
-      - (Create/POST) Create a new comment on a post
-       ```swift        
-        Comment comment = new Comment();
-        comment.setText(text);
-        comment.setUser(currentUser);
-        comment.setEvent(event);
-        comment.saveInBackground(new SaveCallback() {
-            @Override
-            public void done(ParseException e) {
-                if (e != null){
-                    Log.e(TAG, "Issue with commenting", e);
-                    Toast.makeText(getContext(), "Issue with commenting", Toast.LENGTH_SHORT).show();
-                }
-            }
-        });
-        ```
-      - (Delete) Delete existing comment
-   - My Event Liked List Screen
-      - (Read/Event) View events liked by user
-       ```swift
-        ParseQuery<Like> query = ParseQuery.getQuery(Like.class);
-        query.include(Like.KEY_USER);
-        query.include(Like.KEY_EVENT);
-        query.whereEqualTo(Event.KEY_USER, ParseUser.getCurrentUser());
-        query.setLimit(20);
-        query.addDescendingOrder(Post.KEY_CREATED_AT);
-        query.findInBackground(new FindCallback<Like>() {
-            @Override
-            public void done(List<Like> likes, ParseException e) {
-                if (e != null){
-                    Log.e(TAG, "Issue with getting likes", e);
-                    return;
-                }
-                for (Like like: likes){
-                    Log.i(TAG, "Liked: " + like.getEvent().getEventName();         
-                }
-                //turn likes into events
-                allEvents.addEvents(events);
-                adapter.notifyDataSetChanged();
-            }
-          });     
-      ```
-   - Profile Screen
-      - (Read/GET) Query logged in user object
-      - (Update/PUT) Update user profile image
-      ```swift
-        currentUser.put("profilePic", new ParseFile(photoFile));
-        currentUser.saveInBackground(new SaveCallback() {
-            @Override
-            public void done(ParseException e) {
-                if (e != null){
-                    Log.e(TAG, "Issue with saving posts", e);
-                    Toast.makeText(getContext(), "Issue with saving picture",                         Toast.LENGTH_SHORT).show();
-                }
-                Log.i(TAG, "Profile picture save was successful!!");
-                ivPostImage.setImageResource(0);
-            }
-        });
-        ```
-   - Search Bar
-      - (Read/GET) Query selected events based on characters entered
-      
-## Video Walkthroughs
-
-Here are walkthroughs of implemented user stories:
-
-<img src='https://github.com/NylanW1/ThePound/blob/main/milestone1.gif' title='Video Walkthrough1' width='' alt='Video Walkthrough1' />
-
-<img src='https://github.com/NylanW1/ThePound/blob/main/milestone2.gif' title='Video Walkthrough2' width='' alt='Video Walkthrough2' />
-
-<img src='https://github.com/NylanW1/ThePound/blob/main/Walkthough10.gif' width='' alt='Video Walkthrough10' />
-
-<img src='https://github.com/NylanW1/ThePound/blob/main/FinalWalkthough.gif' title='Video Walkthrough Final' width='' alt='Video WalkthroughFinal' />
-
-GIF created with [LiceCap](http://www.cockos.com/licecap/).
-
-<img src='https://github.com/NylanW1/ThePound/blob/main/2020-11-16%2019.49.40.gif' title='Video Walkthroughbonus' width='' alt='Video Walkthroughbonus' />
-
-GIF created with [Gifox](https://gifox.io/).  
+  
