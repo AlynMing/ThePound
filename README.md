@@ -47,7 +47,6 @@ A new addition to the AAMU SSO banner. The Pound allows students and faculty to 
    * Lets people change language, and app notification settings.
 
 ### 3. Navigation
-<img src="https://github.com/NylanW1/ThePound/blob/main/IMG_1979.jpg" width=800><br>
 
 **Tab Navigation** (Tab to Screen)
 
